@@ -947,7 +947,7 @@ button {
 }
 
 .live-panel {
-  min-height: 1000px;
+  min-height: 1220px;
 }
 
 .live-panel > h2 {
@@ -965,7 +965,7 @@ button {
 
 .video-field {
   position: relative;
-  min-height: 830px;
+  min-height: 1050px;
 }
 
 .video-card {
@@ -988,12 +988,23 @@ button {
   letter-spacing: .08em;
 }
 
-.video-thumb {
+.video-frame {
   position: relative;
-  display: grid;
-  place-items: center;
   width: 100%;
   aspect-ratio: 16 / 9;
+}
+
+.video-thumb,
+.video-window {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-thumb {
+  display: grid;
+  place-items: center;
   padding: 0;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,.42);
@@ -1007,8 +1018,24 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: .56;
-  filter: grayscale(1) contrast(1.08) brightness(.72);
+  opacity: 1;
+  filter: grayscale(1) contrast(1.08) brightness(.78);
+}
+
+.video-window {
+  display: none;
+  border: 1px solid rgba(255,255,255,.42);
+  background: #000;
+  object-fit: contain;
+  box-shadow: 0 24px 70px rgba(0,0,0,.38);
+}
+
+.video-frame.is-playing .video-thumb {
+  display: none;
+}
+
+.video-frame.is-playing .video-window {
+  display: block;
 }
 
 .video-thumb::after {
@@ -1054,6 +1081,13 @@ button {
   top: 260px;
   width: clamp(270px, 23vw, 360px);
   z-index: 4;
+}
+
+.video-d {
+  right: clamp(92px, 10vw, 190px);
+  top: 650px;
+  width: clamp(310px, 28vw, 450px);
+  z-index: 5;
 }
 
 .video-card.is-active {

@@ -469,22 +469,33 @@ const activateVideoCard = (card) => {
 videoCards.forEach((card) => {
   const video = card.querySelector(".video-window");
   const thumb = card.querySelector(".video-thumb");
-  card.addEventListener("pointerdown", () => activateVideoCard(card));
-  thumb?.addEventListener("click", () => activateVideoCard(card));
-  video?.addEventListener("play", () => activateVideoCard(card));
-  video?.addEventListener("focus", () => activateVideoCard(card));
-});
+  const frame = card.querySelector(".video-frame");
 
-document.querySelectorAll(".video-play").forEach((button) => {
-  button.addEventListener("click", () => {
-    const card = button.closest(".video-card");
-    const frame = button.closest(".video-frame");
-    const video = frame?.querySelector("video");
+  const prepareVideo = () => {
+    if (!video || video.currentSrc || !video.dataset.src) return;
+    video.src = video.dataset.src;
+    video.removeAttribute("data-src");
+  };
+
+  card.addEventListener("pointerdown", () => activateVideoCard(card));
+  thumb?.addEventListener("click", async () => {
     activateVideoCard(card);
-    if (!video || !video.currentSrc) return;
-    video.play();
-    button.classList.add("is-hidden");
+    prepareVideo();
+    frame?.classList.add("is-playing");
+    try {
+      await video?.play();
+    } catch (error) {
+      console.warn("Video playback failed", error);
+    }
   });
+  video?.addEventListener("play", () => {
+    videoCards.forEach((item) => {
+      if (item !== card) item.querySelector(".video-window")?.pause();
+    });
+    frame?.classList.add("is-playing");
+    activateVideoCard(card);
+  });
+  video?.addEventListener("focus", () => activateVideoCard(card));
 });
 
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
