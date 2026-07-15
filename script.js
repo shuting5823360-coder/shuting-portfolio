@@ -473,8 +473,12 @@ videoCards.forEach((card) => {
 
   const prepareVideo = () => {
     if (!video || video.currentSrc || !video.dataset.src) return;
-    video.src = video.dataset.src;
+    const source = document.createElement("source");
+    source.src = video.dataset.src;
+    source.type = "video/mp4";
+    video.append(source);
     video.removeAttribute("data-src");
+    video.load();
   };
 
   card.addEventListener("pointerdown", () => activateVideoCard(card));
