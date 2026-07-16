@@ -1062,6 +1062,17 @@ button {
   text-shadow: 0 0 18px rgba(0,0,0,.72);
 }
 
+.video-caption {
+  max-width: 36ch;
+  margin: -7px 0 0;
+  color: rgba(255,255,255,.56);
+  font-size: clamp(.78rem, .72vw, .9rem);
+  font-weight: 300;
+  line-height: 1.65;
+  letter-spacing: .03em;
+  text-shadow: 0 0 14px rgba(0,0,0,.72);
+}
+
 .video-a {
   left: clamp(70px, 8vw, 150px);
   top: 210px;
@@ -1330,8 +1341,8 @@ button {
 
 .contact-copy dl div {
   display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 20px;
+  grid-template-columns: max-content 1fr;
+  gap: 12px;
 }
 
 .contact-copy dt {
